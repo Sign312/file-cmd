@@ -13,6 +13,10 @@
 ## 使用
 
 ```javascript
+    let fileCmd=require('file-cmd')
+
+    ...
+    //Generator中...
     try {
         //创建文件夹
         yield fileCmd.mkdir(path.join(__dirname, 'tttt'))
