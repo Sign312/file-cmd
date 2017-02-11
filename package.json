@@ -1,0 +1,19 @@
+{
+  "name": "file-cmd",
+  "version": "0.0.1",
+  "description": "a tool to handle file like cmd",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flypie2/file-cmd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flypie2/file-cmd/issues"
+  },
+  "homepage": "https://github.com/flypie2/file-cmd#readme"
+}
