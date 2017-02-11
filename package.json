@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/flypie2/file-cmd/issues"
   },
-  "homepage": "https://github.com/flypie2/file-cmd#readme"
+  "homepage": "https://github.com/flypie2/file-cmd#readme",
+  "dependencies": {
+    "co": "^4.6.0"
+  }
 }
