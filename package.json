@@ -1,6 +1,6 @@
 {
   "name": "file-cmd",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a tool to handle file like cmd",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,5 @@
   },
   "homepage": "https://github.com/flypie2/file-cmd#readme",
   "dependencies": {
-    "co": "^4.6.0"
   }
 }

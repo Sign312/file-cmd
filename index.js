@@ -1,7 +1,9 @@
 let fs = require('fs')
+let ph = require('path')
 
 let fileCmd = {}
 
+//递归删除一个文件夹
 function deleteFolder(path) {
     let files = [];
     if (fs.existsSync(path)) {
@@ -16,6 +18,75 @@ function deleteFolder(path) {
         });
         fs.rmdirSync(path);
     }
+}
+
+//复制文件夹
+function copyDir(path, pathTo) {
+    let files = fs.readdirSync(path)
+    files.forEach((file, index) => {
+        let curPath = path + "/" + file
+        if (fs.statSync(curPath).isDirectory()) {
+            fs.mkdirSync(pathTo + "/" + file)
+            copyDir(curPath, pathTo + "/" + file)
+        } else {
+            let filedata = fs.readFileSync(curPath)
+            let filename = file
+            fs.writeFileSync(ph.join(pathTo, filename), filedata)
+        }
+    })
+}
+
+//根据路径获取文件或文件夹的名称
+function getName(path) {
+    let names = path.split('/')
+    return names[names.length - 1].length > 0 ? names[names.length - 1] : names[names.length - 2]
+}
+
+fileCmd.ls = function (path) {
+    return new Promise(function (resolve, reject) {
+        if (!fs.existsSync(path)) {
+            reject(path + '不存在')
+            return
+        }
+        if (!fs.statSync(path).isDirectory()) {
+            reject(path + '不是一个目录')
+            return
+        }
+        let files = fs.readdirSync(path)
+        resolve(files)
+    })
+}
+
+fileCmd.cp = function (path, pathTo, rename) {
+    return new Promise(function (resolve, reject) {
+        if (!fs.existsSync(path)) {
+            reject(path + '不存在')
+            return
+        }
+        if (!fs.existsSync(pathTo)) {
+            reject(pathTo + '不存在')
+            return
+        }
+        if (fs.statSync(path).isFile()) {
+            //若被复制的是文件
+            let filedata = fs.readFileSync(path)
+            let filename = rename ? rename : getName(path)
+            fs.writeFileSync(ph.join(pathTo, filename), filedata)
+            resolve(filedata)
+        } else if (fs.statSync(path).isDirectory()) {
+            //若被复制的是文件夹
+            let c_pathTo = rename ? ph.join(pathTo, rename) : ph.join(pathTo, getName(path))
+            if (fs.existsSync(c_pathTo)) {
+                reject(c_pathTo + '已存在')
+            } else {
+                fs.mkdirSync(c_pathTo)
+                copyDir(path, c_pathTo)
+                resolve()
+            }
+        } else {
+            reject(path + '不是正确路径')
+        }
+    })
 }
 
 fileCmd.mkdir = function (path) {
@@ -72,7 +143,7 @@ fileCmd.cat = function (path, text) {
             } else {
                 fs.readFile(path, function (err, data) {
                     if (!err) {
-                        resolve(data.toString())
+                        resolve(data)
                     } else {
                         reject(err)
                     }
