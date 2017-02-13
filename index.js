@@ -57,6 +57,40 @@ fileCmd.ls = function (path) {
     })
 }
 
+fileCmd.mv = function (path, pathTo, rename) {
+    return new Promise(function (resolve, reject) {
+        if (!fs.existsSync(path)) {
+            reject(path + '不存在')
+            return
+        }
+        if (!fs.existsSync(pathTo)) {
+            reject(pathTo + '不存在')
+            return
+        }
+        if (fs.statSync(path).isFile()) {
+            //若被移动的是文件
+            let filedata = fs.readFileSync(path)
+            let filename = rename ? rename : getName(path)
+            fs.writeFileSync(ph.join(pathTo, filename), filedata)
+            fs.unlinkSync(path)
+            resolve(filedata)
+        } else if (fs.statSync(path).isDirectory()) {
+            //若被移动的是文件夹
+            let c_pathTo = rename ? ph.join(pathTo, rename) : ph.join(pathTo, getName(path))
+            if (fs.existsSync(c_pathTo)) {
+                reject(c_pathTo + '已存在')
+            } else {
+                fs.mkdirSync(c_pathTo)
+                copyDir(path, c_pathTo)
+                deleteFolder(path)
+                resolve()
+            }
+        } else {
+            reject(path + '不是正确路径')
+        }
+    })
+}
+
 fileCmd.cp = function (path, pathTo, rename) {
     return new Promise(function (resolve, reject) {
         if (!fs.existsSync(path)) {

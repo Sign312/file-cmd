@@ -32,6 +32,9 @@ co(function* () {
         // let files = fileCmd.ls(path.join(__dirname, ''))
         // console.log(files)
 
+        //test mv
+        yield fileCmd.mv(path.join(__dirname, 'b'), path.join(__dirname, '../'))
+
     } catch (e) {
         console.error(e)
     }
