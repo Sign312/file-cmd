@@ -52,14 +52,21 @@ co(function* () {
             'test_modules'
         )
 
+        //cpf 强制复制文件或文件夹(若复制的是文件夹，将覆盖原有文件夹)
+        yield fileCmd.cpf(
+            path.join(__dirname, 'node_modules'),
+            path.join(__dirname, 'sdf'),
+            'test_modules'
+        )
+
         //ls 遍历文件夹
         //fileCmd.ls(要遍历的文件夹的绝对路径)=>返回文件夹下根目录文件/文件夹名组成的数组
         let files = fileCmd.ls(path.join(__dirname, ''))
         console.log(files)
 
         //mv 移动文件或文件夹
-        //fileCmd.cp(要移动的文件或文件夹,要移动到的路径)
-        //fileCmd.cp(要移动的文件或文件夹,要移动到的路径,对被移动后的文件或文件夹重命名)
+        //fileCmd.mv(要移动的文件或文件夹,要移动到的路径)
+        //fileCmd.mv(要移动的文件或文件夹,要移动到的路径,对被移动后的文件或文件夹重命名)
         //若不传入第三个参数，移动后的文件或文件夹沿用之前的名字
         yield fileCmd.mv(path.join(__dirname, 'b'), path.join(__dirname, '../'))
 
