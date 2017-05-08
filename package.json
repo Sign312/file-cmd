@@ -1,6 +1,6 @@
 {
   "name": "file-cmd",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "a tool to handle file like cmd",
   "main": "index.js",
   "scripts": {

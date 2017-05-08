@@ -152,7 +152,7 @@ fileCmd.cpf = function(path, pathTo, rename) {
         : ph.join(pathTo, getName(path));
       if (fs.existsSync(c_pathTo)) {
         console.log(c_pathTo + "已存在,删除原来的文件夹");
-        this.rm(c_pathTo);
+        fileCmd.rm(c_pathTo);
       }
       fs.mkdirSync(c_pathTo);
       copyDir(path, c_pathTo);
